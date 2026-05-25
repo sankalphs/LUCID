@@ -43,11 +43,11 @@ class WeightedBCEDiceLoss(nn.Module):
         Returns:
             Scalar loss value
         """
-        # Weighted BCE
+        pred = torch.sigmoid(pred)
+
         weight = torch.where(target == 1, self.pos_weight, 1.0)
         bce = F.binary_cross_entropy(pred, target, weight=weight)
         
-        # Dice loss
         intersection = (pred * target).sum()
         dice = 1 - (2 * intersection + self.smooth) / (
             pred.sum() + target.sum() + self.smooth

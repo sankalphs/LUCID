@@ -92,16 +92,17 @@ def morphological_postprocess(prediction: np.ndarray,
     Returns:
         Cleaned binary mask (H, W) float32
     """
-    from skimage.morphology import disk, opening, closing, binary_fill_holes
-
+    from skimage.morphology import disk, opening, closing
+    from scipy.ndimage import binary_fill_holes
+    
     binary = (prediction > threshold).astype(np.uint8)
-
+    
     selem = disk(disk_size)
     cleaned = opening(binary, selem)
     cleaned = closing(cleaned, selem)
-
+    
     if fill_holes:
-        cleaned = binary_fill_holes(cleaned)
+        cleaned = binary_fill_holes(cleaned).astype(np.uint8)
 
     return cleaned.astype(np.float32)
 
