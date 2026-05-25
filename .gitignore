@@ -1,0 +1,45 @@
+# Dataset (large files, not tracked)
+dataset/kaggle_dataset/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Virtual environments
+venv/
+env/
+.venv/
+.env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Outputs (generated during training)
+outputs/checkpoints/
+outputs/logs/
+outputs/figures/
+outputs/*.json
+outputs/*.npy
+
+# Jupyter Notebooks checkpoints
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Temp
+*.tmp
+*.bak

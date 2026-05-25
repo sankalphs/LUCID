@@ -1,0 +1,100 @@
+# PSR Shadow Boundary Segmentation - Configuration
+# Paper: "Delineation of Shadow-Illumination Boundaries in Lunar PSRs"
+
+project:
+  name: "psr_shadow_boundary_segmentation"
+  seed: 42
+
+data:
+  base_dir: "D:/Coding/ch-2_OHRC_PSRs/dataset/kaggle_dataset"
+  patch_size: 64
+  classes: ["psr", "sunlit", "mixed"]
+  
+  # Pixel intensity statistics (from HANDOVER.md)
+  stats:
+    psr_mean: 0.0284
+    psr_std: 0.0215
+    sunlit_mean: 0.4365
+    sunlit_std: 0.1645
+    mixed_mean: 0.0832
+    mixed_std: 0.0743
+
+  splits:
+    train_strips: ["shackleton_01", "cabeus_01"]
+    val_strips: ["shackleton_02"]
+    test_strips: ["shackleton_02"]
+
+mask:
+  fallback_threshold: 0.0484
+  min_psr_mean: 0.0284
+  morphological_disk: 1
+
+model:
+  architecture: "unet"
+  encoder: "resnet18"
+  encoder_weights: null
+  in_channels: 1
+  classes: 1
+  activation: "sigmoid"
+
+training:
+  batch_size: 32
+  epochs: 100
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  scheduler:
+    type: "ReduceLROnPlateau"
+    factor: 0.5
+    patience: 7
+    min_lr: 0.00001
+  early_stopping:
+    patience: 15
+    metric: "val_iou"
+  checkpoint_metric: "val_iou"
+
+loss:
+  type: "weighted_bce_dice"
+  pos_weight: 3.0
+  dice_weight: 0.5
+
+augmentation:
+  horizontal_flip: 0.5
+  vertical_flip: 0.5
+  random_rotate90: 0.5
+  clahe:
+    clip_limit: [1.0, 4.0]
+    tile_grid_size: [8, 8]
+    p: 0.5
+  random_brightness_contrast:
+    brightness_limit: [-0.15, 0.15]
+    contrast_limit: [-0.3, 0.3]
+    p: 0.7
+  random_gamma:
+    gamma_limit: [70, 130]
+    p: 0.4
+  coarse_dropout:
+    num_holes: [1, 4]
+    hole_height: [8, 16]
+    hole_width: [8, 16]
+    fill_value: 0
+    p: 0.3
+
+inference:
+  window_size: 64
+  stride: 32
+  band_rows: 128
+  boundary_threshold: 0.5
+
+evaluation:
+  metrics: ["iou", "dice", "pixel_accuracy", "hd95", "boundary_f1"]
+  targets:
+    iou: 0.70
+    dice: 0.80
+    pixel_accuracy: 0.90
+    hd95: 5.0
+    boundary_f1: 0.50
+
+outputs:
+  checkpoint_dir: "outputs/checkpoints"
+  log_dir: "outputs/logs"
+  figure_dir: "outputs/figures"
