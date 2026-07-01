@@ -1,0 +1,1 @@
+{"arch": "unetplusplus", "phase": "done", "epoch": 100, "best_epoch": 99, "best_val_iou": 0.8977257016363482, "metrics": {"iou": 0.8861166437401078, "dice": 0.9324473511391503, "accuracy": 0.9491011197138142, "hd95": 1.3082577900302985, "bf1": 0.8922658298083681}, "train_time_sec": 99852, "updated_at": "2026-06-30T13:12:04"}

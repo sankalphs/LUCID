@@ -1,0 +1,15 @@
+{
+  "model": "unetplusplus",
+  "encoder": "resnet18",
+  "iou": 0.8861166437401078,
+  "dice": 0.9324473511391503,
+  "accuracy": 0.9491011197138142,
+  "hd95": 1.3082577900302985,
+  "bf1": 0.8922658298083681,
+  "best_epoch": 99,
+  "final_epoch": 100,
+  "parameters": 15964177,
+  "best_val_iou_at_save": 0.8976725339889526,
+  "train_time_minutes": 1664.2,
+  "note": "Ran to max_epochs=100 (best val IoU kept improving through epoch 99). Fully converged under identical conditions to the U-Net baseline: same seed=42, batch_size=32, Adam(lr=1e-3,wd=1e-4), ReduceLROnPlateau(factor=0.5,patience=7), early-stop(patience=15,max=100), WeightedBCE+Dice(pos_w=3.0,dice_w=0.5), same Shackleton-01+Cabeus-01 train / Shackleton-02 val split, same Multi-Otsu pseudo-labels (fallback threshold 0.0484), no pretraining (encoder_weights=None)."
+}

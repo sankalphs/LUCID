@@ -43,3 +43,4 @@ desktop.ini
 # Temp
 *.tmp
 *.bak
+baselines/checkpoints

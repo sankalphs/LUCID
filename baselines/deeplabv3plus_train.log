@@ -1,0 +1,49 @@
+Device: cpu
+Seed: 42
+Batch size: 32, LR: 0.001, WD: 0.0001
+Max epochs: 100, Early-stopping patience: 15
+Loss: weighted BCE(pos_w=3.0) + Dice(weight=0.5)
+Pseudo-labels: Multi-Otsu with fallback threshold 0.0484
+
+======================================================================
+BASELINE: deeplabv3plus
+======================================================================
+Train batches: 1025, Val batches: 63
+Architecture: smp.deeplabv3plus / resnet18 | params=12,323,025
+
+Training for up to 100 epochs...
+Best checkpoint path: D:\Coding\ch-2_OHRC_PSRs\baselines\checkpoints\deeplabv3plus_resnet18_best.pth
+Status file: D:\Coding\ch-2_OHRC_PSRs\baselines\status_deeplabv3plus.json
+Total batches/epoch: 1025 train + 63 val
+  [ep1] NEW BEST val_iou=0.7136 (checkpoint saved)
+  [ep2] NEW BEST val_iou=0.7727 (checkpoint saved)
+  [ep4] NEW BEST val_iou=0.7746 (checkpoint saved)
+  [ep5] NEW BEST val_iou=0.7907 (checkpoint saved)
+  [ep6] NEW BEST val_iou=0.7941 (checkpoint saved)
+  [ep9] NEW BEST val_iou=0.8038 (checkpoint saved)
+  [ep13] NEW BEST val_iou=0.8128 (checkpoint saved)
+  [ep14] NEW BEST val_iou=0.8211 (checkpoint saved)
+  [ep15] NEW BEST val_iou=0.8304 (checkpoint saved)
+  [ep17] NEW BEST val_iou=0.8348 (checkpoint saved)
+  [ep21] NEW BEST val_iou=0.8443 (checkpoint saved)
+  [ep30] NEW BEST val_iou=0.8452 (checkpoint saved)
+  [ep31] NEW BEST val_iou=0.8477 (checkpoint saved)
+  [ep33] NEW BEST val_iou=0.8491 (checkpoint saved)
+  [ep34] NEW BEST val_iou=0.8534 (checkpoint saved)
+  [ep38] NEW BEST val_iou=0.8574 (checkpoint saved)
+  [ep40] NEW BEST val_iou=0.8577 (checkpoint saved)
+  [ep41] NEW BEST val_iou=0.8617 (checkpoint saved)
+  [ep48] NEW BEST val_iou=0.8623 (checkpoint saved)
+  [ep60] NEW BEST val_iou=0.8642 (checkpoint saved)
+  [ep62] NEW BEST val_iou=0.8651 (checkpoint saved)
+  [ep68] NEW BEST val_iou=0.8674 (checkpoint saved)
+  [ep80] NEW BEST val_iou=0.8674 (checkpoint saved)
+
+  [ep83] Early stopping triggered (no improvement for 15 epochs).
+
+Training finished in 804.0 min (13.40 hours)
+Best val IoU=0.8674 at epoch 80 (ran 83 epochs total)
+
+Evaluating best checkpoint on 2007 val patches...
+Final metrics: {'iou': 0.8558394285295775, 'dice': 0.9156619724762285, 'accuracy': 0.9328614497695565, 'hd95': 1.4340332485772656, 'bf1': 0.830796731299517}
+  -> wrote D:\Coding\ch-2_OHRC_PSRs\baselines\deeplabv3plus_resnet18.json

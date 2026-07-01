@@ -1,0 +1,1 @@
+{"arch": "deeplabv3plus", "phase": "done", "epoch": 83, "best_epoch": 80, "best_val_iou": 0.8674148506793061, "metrics": {"iou": 0.8558394285295775, "dice": 0.9156619724762285, "accuracy": 0.9328614497695565, "hd95": 1.4340332485772656, "bf1": 0.830796731299517}, "train_time_sec": 48241, "updated_at": "2026-07-01T02:53:30"}

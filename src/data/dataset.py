@@ -30,12 +30,14 @@ class PSRDataset(Dataset):
     """
 
     def __init__(self, patches_dir: str, class_label: str, split: str,
-                 transform=None, clean_masks: bool = True):
+                 transform=None, clean_masks: bool = True,
+                 fallback_threshold: float | None = None):
         self.patches_dir = Path(patches_dir)
         self.class_label = class_label
         self.split = split
         self.transform = transform
         self.clean_masks = clean_masks
+        self.fallback_threshold = fallback_threshold
 
         # Load patches from .npy file
         npy_path = self.patches_dir / class_label / f"{split}.npy"
@@ -49,7 +51,9 @@ class PSRDataset(Dataset):
         # Generate masks
         self.masks = np.zeros_like(self.patches, dtype=np.float32)
         for i in range(len(self.patches)):
-            mask, _ = generate_mask(self.patches[i], class_label)
+            mask, _ = generate_mask(
+                self.patches[i], class_label, self.fallback_threshold
+            )
             if clean_masks:
                 mask = clean_mask(mask)
             self.masks[i] = mask
@@ -97,14 +101,18 @@ class CombinedPSRDataset(Dataset):
 
     def __init__(self, patches_dir: str, split: str,
                  classes: list[str] = None,
-                 transform=None, clean_masks: bool = True):
+                 transform=None, clean_masks: bool = True,
+                 fallback_threshold: float | None = None):
         if classes is None:
             classes = ['psr', 'sunlit', 'mixed']
 
         self.datasets = []
         for cls in classes:
             try:
-                ds = PSRDataset(patches_dir, cls, split, transform, clean_masks)
+                ds = PSRDataset(
+                    patches_dir, cls, split, transform, clean_masks,
+                    fallback_threshold=fallback_threshold,
+                )
                 self.datasets.append(ds)
             except FileNotFoundError:
                 continue

@@ -1,0 +1,44 @@
+[
+  {
+    "model": "U-Net/ResNet18 (LUCID)",
+    "encoder": "resnet18",
+    "iou": 0.9203,
+    "dice": 0.9576,
+    "accuracy": 0.964,
+    "hd95": 0.3454,
+    "bf1": 0.9373,
+    "best_epoch": 42,
+    "final_epoch": 57,
+    "parameters": 14321937,
+    "train_time_minutes": null,
+    "note": "Reference: existing fully-converged run from outputs/results.json (early-stopped at epoch 57, best at epoch 42)."
+  },
+  {
+    "model": "U-Net++/ResNet18",
+    "encoder": "resnet18",
+    "iou": 0.8861166437401078,
+    "dice": 0.9324473511391503,
+    "accuracy": 0.9491011197138142,
+    "hd95": 1.3082577900302985,
+    "bf1": 0.8922658298083681,
+    "best_epoch": 99,
+    "final_epoch": 100,
+    "parameters": 15964177,
+    "train_time_minutes": 1664.2,
+    "note": "Ran to max_epochs=100 (best val IoU kept improving through epoch 99). Fully converged under identical conditions to the U-Net baseline. Took ~28h on CPU."
+  },
+  {
+    "model": "DeepLabV3+/ResNet18",
+    "encoder": "resnet18",
+    "iou": 0.8558394285295775,
+    "dice": 0.9156619724762285,
+    "accuracy": 0.9328614497695565,
+    "hd95": 1.4340332485772656,
+    "bf1": 0.830796731299517,
+    "best_epoch": 80,
+    "final_epoch": 83,
+    "parameters": 12323025,
+    "train_time_minutes": 804.0,
+    "note": "Early-stopped at epoch 83 (best at epoch 80, no improvement for 15 epochs). Fully converged under identical conditions. smp.DeepLabV3Plus/resnet18 worked on 64x64 grayscale without errors - no fallback encoder needed. Took ~13h on CPU."
+  }
+]

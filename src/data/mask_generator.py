@@ -29,7 +29,7 @@ VALID_LABELS: frozenset[str] = frozenset({"psr", "sunlit", "mixed"})
 
 
 def generate_mask(
-    patch: np.ndarray, class_label: str
+    patch: np.ndarray, class_label: str, fallback_threshold: float | None = None
 ) -> tuple[np.ndarray, str]:
     """
     Generate a binary mask from a patch based on its class label.
@@ -42,6 +42,10 @@ def generate_mask(
     Args:
         patch: 2D float32 array (H, W) with pixel intensities in [0, 1].
         class_label: One of 'psr', 'sunlit', or 'mixed'.
+        fallback_threshold: Optional override for the fallback threshold
+            used when Multi-Otsu fails on near-uniform mixed patches.
+            If None, uses the module-level FALLBACK_THRESHOLD
+            (= PSR_MEAN + 0.02 = 0.0484).
 
     Returns:
         A tuple of:
@@ -66,6 +70,8 @@ def generate_mask(
     if patch.ndim != 2:
         raise ValueError(f"patch must be 2D (H, W), got {patch.ndim}D.")
 
+    threshold = FALLBACK_THRESHOLD if fallback_threshold is None else float(fallback_threshold)
+
     if class_label == "psr":
         return np.zeros_like(patch, dtype=np.float32), "psr_fixed"
     elif class_label == "sunlit":
@@ -85,9 +91,9 @@ def generate_mask(
             logger.debug(
                 "Multi-Otsu failed on patch with std=%.4f; using fallback threshold=%.4f",
                 patch.std(),
-                FALLBACK_THRESHOLD,
+                threshold,
             )
-            return (patch > FALLBACK_THRESHOLD).astype(np.float32), "fallback"
+            return (patch > threshold).astype(np.float32), "fallback"
 
 
 def clean_mask(mask: np.ndarray, disk_radius: int = 1) -> np.ndarray:
@@ -173,6 +179,7 @@ def generate_masks_batch(
     patches: np.ndarray,
     class_labels: list[str],
     clean: bool = True,
+    fallback_threshold: float | None = None,
 ) -> tuple[np.ndarray, list[str], dict[str, Any]]:
     """
     Generate masks for a batch of patches with validation.
@@ -186,6 +193,8 @@ def generate_masks_batch(
         class_labels: List of N class labels ('psr', 'sunlit', 'mixed').
         clean: Whether to apply morphological closing to each mask.
             Default: True.
+        fallback_threshold: Optional override for the fallback threshold
+            passed to each ``generate_mask`` call. See ``generate_mask``.
 
     Returns:
         A tuple of:
@@ -203,7 +212,7 @@ def generate_masks_batch(
     methods: list[str] = []
 
     for i in range(N):
-        mask, method = generate_mask(patches[i], class_labels[i])
+        mask, method = generate_mask(patches[i], class_labels[i], fallback_threshold)
         if clean:
             mask = clean_mask(mask)
         masks[i] = mask
