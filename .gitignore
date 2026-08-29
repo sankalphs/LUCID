@@ -1,7 +1,7 @@
-# Dataset (large files, not tracked; obtain via Kaggle - see README)
+# Data (large, download via Kaggle - see README)
 dataset/kaggle_dataset/
-dataset/*.zip
-dataset/*.tar.gz
+*.zip
+*.tar.gz
 
 # Python
 __pycache__/
@@ -15,16 +15,14 @@ build/
 *.egg
 .eggs/
 *.whl
-pip-wheel-metadata/
 
-# Virtual environments
+# Virtual envs
 venv/
 env/
 .venv/
-.env/
 .conda/
 
-# IDE / editors
+# IDE
 .vscode/
 .idea/
 *.swp
@@ -32,26 +30,24 @@ env/
 *~
 *.code-workspace
 
-# Outputs — reproducible via `python run_pipeline.py` / `experiments/run_all_*`
-# All generated artifacts ignored by default; see docs/REPRODUCIBILITY.md
+# Generated outputs (reproducible - see docs/REPRODUCIBILITY.md)
 outputs/
 results/
+checkpoints/
 *.pth
 *.npz
-checkpoints/
 lightning_logs/
 wandb/
-.neptune/
 mlruns/
 
-# Legacy per-run logs (keep findings_report.md and comparison tables)
-ablation_results/*.log
+# Experiment rubbish (logs, large debug dumps)
+ablation_results/
 baselines/*.log
 baselines/*.err
 baselines/*.done
 baselines/checkpoints/
 
-# Paper build artifacts (keep .tex, .pdf, figures)
+# Paper build intermediates (keep .tex and .pdf/figures)
 paper/*.aux
 paper/*.log
 paper/*.out
@@ -69,9 +65,8 @@ paper/*.synctex.gz
 .DS_Store
 Thumbs.db
 desktop.ini
-ehthumbs.db
 
-# Caches / coverage
+# Caches
 .pytest_cache/
 .ruff_cache/
 .mypy_cache/
@@ -84,3 +79,4 @@ htmlcov/
 kaggle.json
 *.pem
 *.key
+.env
