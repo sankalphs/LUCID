@@ -331,14 +331,14 @@ def _main() -> None:
     parser.add_argument(
         "--patches_dir",
         type=str,
-        default="D:/Coding/ch-2_OHRC_PSRs/dataset/kaggle_dataset/patches",
-        help="Path to patches/ directory.",
+        default="dataset/kaggle_dataset/patches",
+        help="Path to patches/ directory (relative to repo root).",
     )
     parser.add_argument(
         "--output_dir",
         type=str,
-        default="D:/Coding/ch-2_OHRC_PSRs/outputs/dinov2_masks",
-        help="Directory to save generated masks.",
+        default="outputs/dinov2_masks",
+        help="Directory to save generated masks (relative to repo root).",
     )
     parser.add_argument(
         "--class_label",

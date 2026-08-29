@@ -1,5 +1,7 @@
-# Dataset (large files, not tracked)
+# Dataset (large files, not tracked; obtain via Kaggle - see README)
 dataset/kaggle_dataset/
+dataset/*.zip
+dataset/*.tar.gz
 
 # Python
 __pycache__/
@@ -11,36 +13,74 @@ __pycache__/
 dist/
 build/
 *.egg
+.eggs/
+*.whl
+pip-wheel-metadata/
 
 # Virtual environments
 venv/
 env/
 .venv/
 .env/
+.conda/
 
-# IDE
+# IDE / editors
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
+*.code-workspace
 
-# Outputs (generated during training)
-outputs/checkpoints/
-outputs/logs/
-outputs/figures/
-outputs/*.json
-outputs/*.npy
+# Outputs — reproducible via `python run_pipeline.py` / `experiments/run_all_*`
+# All generated artifacts ignored by default; see docs/REPRODUCIBILITY.md
+outputs/
+results/
+*.pth
+*.npz
+checkpoints/
+lightning_logs/
+wandb/
+.neptune/
+mlruns/
 
-# Jupyter Notebooks checkpoints
+# Legacy per-run logs (keep findings_report.md and comparison tables)
+ablation_results/*.log
+baselines/*.log
+baselines/*.err
+baselines/*.done
+baselines/checkpoints/
+
+# Paper build artifacts (keep .tex, .pdf, figures)
+paper/*.aux
+paper/*.log
+paper/*.out
+paper/*.toc
+paper/*.bbl
+paper/*.blg
+paper/*.fls
+paper/*.fdb_latexmk
+paper/*.synctex.gz
+
+# Jupyter
 .ipynb_checkpoints/
 
 # OS
 .DS_Store
 Thumbs.db
 desktop.ini
+ehthumbs.db
 
-# Temp
-*.tmp
-*.bak
-baselines/checkpoints
+# Caches / coverage
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+.tox/
+.hypothesis/
+
+# Secrets
+kaggle.json
+*.pem
+*.key

@@ -6,7 +6,7 @@ project:
   seed: 42
 
 data:
-  base_dir: "D:/Coding/ch-2_OHRC_PSRs/dataset/kaggle_dataset"
+  base_dir: "dataset/kaggle_dataset"  # relative to repo root; override with --data-dir or env
   patch_size: 64
   classes: ["psr", "sunlit", "mixed"]
   
