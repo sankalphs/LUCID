@@ -1,5 +1,4 @@
 # PSR Shadow Boundary Segmentation - Configuration
-# Paper: "Delineation of Shadow-Illumination Boundaries in Lunar PSRs"
 
 project:
   name: "psr_shadow_boundary_segmentation"
